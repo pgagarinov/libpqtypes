@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# http://opendx.npaci.edu/mail/opendx-dev/2003.07/msg00081.html
+
+rm -f aclocal.m4
+
+CAT=false
+
+#You should add the contents of `/usr/local/share/aclocal/libtool15.m4' to `aclocal.m4'.
+OUT=$(libtoolize --force --copy | grep "You should add the contents of \`[^']*' to \`aclocal.m4'.")
+if [ $? == 0 ] ; then
+	ACLOCAL=$(echo $OUT | sed "s/You should add the contents of \`//;s/' to \`aclocal.m4'.//")
+	if [ $? == 0 ] ; then
+		CAT=true
+	fi
+fi
+
+aclocal
+if [ "$CAT" == "true" ] ; then
+	cat $ACLOCAL >> aclocal.m4
+fi
+autoheader
+automake -a -i
+autoconf
+

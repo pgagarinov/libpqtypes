@@ -1,0 +1,709 @@
+Index: ChangeLog
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/ChangeLog,v
+retrieving revision 1.64
+retrieving revision 1.67
+diff -r1.64 -r1.67
+10a11,36
+> (NOT RELEASED), v1.5.2
+> - BUG: Fixed putting binary empty strings. Previously, the string was
+>   incorrectly converted to SQL NULLs, but now are properly packed and
+>   transmitted.
+>   - Reported by: Dmitry Epstein
+> - FEATURE: Added ability to put SQL NULLs for int2, int4, int8, float4, float8,
+>   numeric,"char", bool and money types. This is accomplished by using
+>   the type-spec pointer flag "*" and allowing these types to be passed as
+>   pointers:
+>   >>
+>     int *i = NULL;
+>     if(something_is_true)
+>       *i = 10;
+>     PQputf(param, "%int4*", i);
+>   >>
+>   Before this change, the use of "*" flag for these types was ignored
+>   and passing any of them as pointers was not allowed.
+>   - Requested by: Dmitry Epstein and several on stackoverflow.
+>     http://stackoverflow.com/questions/18684331/passing-sql-null-as-a-sql-statement-parameter-value-using-the-postgresql-libpqty
+> - Updated Copyright statement from 2011 to 2008 - 2015, affected all source
+>   code and man page files.
+> - Update an example within docs/man3/PQputf.3 to include putting a NULL
+>   using the pass-by-pointer type-specifier flag '*'.
+> - Updated docs/man3/pqt-specs.3 to include documentation in regard to putting
+>   NULLs using the pass-by-pointer flag.
+> 
+19c45
+<   TLS key for each thread's error structure.  For whatever reason, 
+---
+>   TLS key for each thread's error structure.  For whatever reason,
+Index: LICENSE
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/LICENSE,v
+retrieving revision 1.3
+retrieving revision 1.4
+diff -r1.3 -r1.4
+5c5
+< Copyright (c) 2009 eSilo, LLC. All rights reserved.
+---
+> Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+20c20
+< AND ESILO, LLC. HAS NO OBLIGATIONS TO PROVIDE MAINTENANCE, SUPPORT, UPDATES, 
+---
+> AND ESILO, LLC. HAS NO OBLIGATIONS TO PROVIDE MAINTENANCE, SUPPORT, UPDATES,
+Index: docs/man3/PQexecf.3
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/docs/man3/PQexecf.3,v
+retrieving revision 1.6
+retrieving revision 1.8
+diff -r1.6 -r1.8
+1c1
+< .TH "PQexecf" 3 2011 "libpqtypes" "libpqtypes Manual"
+---
+> .TH "PQexecf" 3 2008-2015 "libpqtypes" "libpqtypes Manual"
+96c96
+< Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+> Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: docs/man3/PQgeterror.3
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/docs/man3/PQgeterror.3,v
+retrieving revision 1.8
+retrieving revision 1.10
+diff -r1.8 -r1.10
+1c1
+< .TH "PQgeterror" 3 2011 "libpqtypes" "libpqtypes Manual"
+---
+> .TH "PQgeterror" 3 2008-2015 "libpqtypes" "libpqtypes Manual"
+49c49
+< Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+> Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: docs/man3/PQgetf.3
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/docs/man3/PQgetf.3,v
+retrieving revision 1.9
+retrieving revision 1.11
+diff -r1.9 -r1.11
+1c1
+< .TH "PQgetf" 3 2011 "libpqtypes" "libpqtypes Manual"
+---
+> .TH "PQgetf" 3 2008-2015 "libpqtypes" "libpqtypes Manual"
+97c97
+< Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+> Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: docs/man3/PQinitTypes.3
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/docs/man3/PQinitTypes.3,v
+retrieving revision 1.1
+retrieving revision 1.3
+diff -r1.1 -r1.3
+1c1
+< .TH PQinitTypes 3 2011 "libpqtypes" "libpqtypes Manual"
+---
+> .TH PQinitTypes 3 2008-2015 "libpqtypes" "libpqtypes Manual"
+47c47
+< Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+> Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: docs/man3/PQlocalTZInfo.3
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/docs/man3/PQlocalTZInfo.3,v
+retrieving revision 1.5
+retrieving revision 1.7
+diff -r1.5 -r1.7
+1c1
+< .TH "PQlocalTZInfo" 3 2011 "libpqtypes" "libpqtypes Manual"
+---
+> .TH "PQlocalTZInfo" 3 2008-2015 "libpqtypes" "libpqtypes Manual"
+59c59
+< Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+> Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: docs/man3/PQparamCreate.3
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/docs/man3/PQparamCreate.3,v
+retrieving revision 1.9
+retrieving revision 1.11
+diff -r1.9 -r1.11
+1c1
+< .TH "PQparamCreate" 3 2011 "libpqtypes" "libpqtypes Manual"
+---
+> .TH "PQparamCreate" 3 2008-2015 "libpqtypes" "libpqtypes Manual"
+69c69
+< Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+> Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: docs/man3/PQparamExec.3
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/docs/man3/PQparamExec.3,v
+retrieving revision 1.6
+retrieving revision 1.8
+diff -r1.6 -r1.8
+1c1
+< .TH "PQparamExec" 3 2011 "libpqtypes" "libpqtypes Manual"
+---
+> .TH "PQparamExec" 3 2008-2015 "libpqtypes" "libpqtypes Manual"
+99c99
+< Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+> Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: docs/man3/PQparamSendQuery.3
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/docs/man3/PQparamSendQuery.3,v
+retrieving revision 1.4
+retrieving revision 1.6
+diff -r1.4 -r1.6
+1c1
+< .TH "PQparamSendQuery" 3 2011 "libpqtypes" "libpqtypes Manual"
+---
+> .TH "PQparamSendQuery" 3 2008-2015 "libpqtypes" "libpqtypes Manual"
+82c82
+< Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+> Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: docs/man3/PQputf.3
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/docs/man3/PQputf.3,v
+retrieving revision 1.9
+retrieving revision 1.11
+diff -r1.9 -r1.11
+1c1
+< .TH "PQputf" 3 2011 "libpqtypes" "libpqtypes Manual"
+---
+> .TH "PQputf" 3 2008-2015 "libpqtypes" "libpqtypes Manual"
+47c47,49
+< The example uses \fIPQputf\fP() to put a couple parameters into a PGparam.
+---
+> The example uses \fIPQputf\fP() to put a few parameters into a PGparam. Note
+> that the last parameter puts an SQL NULL as an int4 using the pass-by-pointer
+> type-specifier pointer flag '*', rather than pass-by-value.
+52a55
+> PGint4 *i4ptr = NULL;
+55c58
+< if(!PQputf(param, "%text %int8", text, i8))
+---
+> if(!PQputf(param, "%text %int8 %int4*", text, i8, i4ptr))
+110c113
+< Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+> Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: docs/man3/PQregisterComposites.3
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/docs/man3/PQregisterComposites.3,v
+retrieving revision 1.3
+retrieving revision 1.5
+diff -r1.3 -r1.5
+1c1
+< .TH "PQregisterComposites" 3 2011 "libpqtypes" "libpqtypes Manual"
+---
+> .TH "PQregisterComposites" 3 2008-2015 "libpqtypes" "libpqtypes Manual"
+72c72
+< Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+> Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: docs/man3/PQregisterResult.3
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/docs/man3/PQregisterResult.3,v
+retrieving revision 1.1
+retrieving revision 1.3
+diff -r1.1 -r1.3
+1c1
+< .TH "PQregisterResult" 3 2011 "libpqtypes" "libpqtypes Manual"
+---
+> .TH "PQregisterResult" 3 2008-2015 "libpqtypes" "libpqtypes Manual"
+112c112
+< Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+> Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: docs/man3/PQregisterSubClasses.3
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/docs/man3/PQregisterSubClasses.3,v
+retrieving revision 1.2
+retrieving revision 1.4
+diff -r1.2 -r1.4
+1c1
+< .TH "PQregisterSubClasses" 3 2011 "libpqtypes" "libpqtypes Manual"
+---
+> .TH "PQregisterSubClasses" 3 2008-2015 "libpqtypes" "libpqtypes Manual"
+54c54
+< Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+> Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: docs/man3/PQregisterTypes.3
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/docs/man3/PQregisterTypes.3,v
+retrieving revision 1.2
+retrieving revision 1.4
+diff -r1.2 -r1.4
+1c1
+< .TH "PQregisterTypes" 3 2011 "libpqtypes" "libpqtypes Manual"
+---
+> .TH "PQregisterTypes" 3 2008-2015 "libpqtypes" "libpqtypes Manual"
+81c81
+< Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+> Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: docs/man3/PQregisterUserDefinedTypes.3
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/docs/man3/PQregisterUserDefinedTypes.3,v
+retrieving revision 1.3
+retrieving revision 1.5
+diff -r1.3 -r1.5
+1c1
+< .TH "PQregisterUserDefinedTypes" 3 2011 "libpqtypes" "libpqtypes Manual"
+---
+> .TH "PQregisterUserDefinedTypes" 3 2008-2015 "libpqtypes" "libpqtypes Manual"
+74c74
+< Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+> Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: docs/man3/PQspecPrepare.3
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/docs/man3/PQspecPrepare.3,v
+retrieving revision 1.13
+retrieving revision 1.15
+diff -r1.13 -r1.15
+1c1
+< .TH "PQspecPrepare" 3 2011 "libpqtypes" "libpqtypes Manual"
+---
+> .TH "PQspecPrepare" 3 2008-2015 "libpqtypes" "libpqtypes Manual"
+115c115
+< Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+> Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: docs/man3/PQtypesRegister.3
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/docs/man3/PQtypesRegister.3,v
+retrieving revision 1.5
+retrieving revision 1.7
+diff -r1.5 -r1.7
+1c1
+< .TH PQtypesRegister 3 2011 "libpqtypes" "libpqtypes Manual"
+---
+> .TH PQtypesRegister 3 2008-2015 "libpqtypes" "libpqtypes Manual"
+45c45
+< Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+> Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: docs/man3/pqt-composites.3
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/docs/man3/pqt-composites.3,v
+retrieving revision 1.8
+retrieving revision 1.10
+diff -r1.8 -r1.10
+1c1
+< .TH "pqt-composites" 3 2011 "libpqtypes" "libpqtypes Manual"
+---
+> .TH "pqt-composites" 3 2008-2015 "libpqtypes" "libpqtypes Manual"
+256c256
+< Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+> Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: docs/man3/pqt-handlers.3
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/docs/man3/pqt-handlers.3,v
+retrieving revision 1.12
+retrieving revision 1.14
+diff -r1.12 -r1.14
+1c1
+< .TH "pqt-handlers" 3 2011 "libpqtypes" "libpqtypes Manual"
+---
+> .TH "pqt-handlers" 3 2008-2015 "libpqtypes" "libpqtypes Manual"
+155c155
+< 	/* The memory behind the 'attDescs' pointer when the number of 
+---
+> 	/* The memory behind the 'attDescs' pointer when the number of
+591c591
+< Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+> Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: docs/man3/pqt-specs.3
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/docs/man3/pqt-specs.3,v
+retrieving revision 1.14
+retrieving revision 1.16
+diff -r1.14 -r1.16
+1c1
+< .TH "pqt-specs" 3 2011 "libpqtypes" "libpqtypes Manual"
+---
+> .TH "pqt-specs" 3 2008-2015 "libpqtypes" "libpqtypes Manual"
+78,81c78,83
+<    *  This is called the pointer flag.  It is only supported on a
+<       handful of builtin types during a \fIPQputf(3)\fP, but user registered
+<       types can provide support for them.  Supported types are:
+<       VARCHAR, BPCHAR, TEXT, BYTEA, NAME and the pqt.str.
+---
+>    *  This is called the pass-by-pointer flag.  It is supported by all
+>       builtin types during a \fIPQputf(3)\fP. For integer, bool, money and
+>       "char" types (scalars), one can omit this flag to pass-by-value. For
+>       all other types, omitting this flag has no effect; they are always
+>       passed by pointer and thus this flag is not needed for things like
+>       text, timestamp, uuid, etc..
+85c87,90
+<       it.
+---
+>       it. For scalars (ints, bool, etc..), this tell libpqtypes
+>       to dereference the pointer to get the value. However, an upside
+>       is that you can pass in a C NULL for the scalar pointer and it
+>       will produce an SQL NULL when put.
+112c117,119
+< type, it will be silently truncated.
+---
+> type, it will be silently truncated. Note the use of the pass-by-pointer
+> flag being used for the last two arguments, allowing you to easily put
+> an SQL NULL for any numeric type.
+116,117c123,125
+< PQputf(param, "%int2 %int4 %int8 %float4 %float8",
+< 	SHRT_MAX, INT_MAX, LLONG_MAX, 1234.56, 123456.789);\fP
+---
+> PGint2 i2 = 10;
+> PQputf(param, "%int2 %int4 %int8 %float4 %float8 %int2* %int8*",
+> 	SHRT_MAX, INT_MAX, LLONG_MAX, 1234.56, 123456.789, &i2, NULL);\fP
+305c313
+< PQputf(param, "%char %char", 213, c);\fP
+---
+> PQputf(param, "%char %char %char*", 213, c, NULL);\fP
+1106c1114
+< Putting a money value:
+---
+> Putting a money value (put two money values, one is an SQL NULL):
+1111c1119
+< PQputf(param, "%money", money);
+---
+> PQputf(param, "%money %money*", money, NULL);
+1128c1136
+< Putting a bool value:
+---
+> Putting a bool value (this puts true and a bool SQL NULL):
+1133c1141
+< PQputf(param, "%bool", b);
+---
+> PQputf(param, "%bool %bool*", b, NULL);
+1206c1214
+< Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+> Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: src/array.c
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/src/array.c,v
+retrieving revision 1.11
+retrieving revision 1.13
+diff -r1.11 -r1.13
+6c6
+<  * Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+>  * Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: src/datetime.c
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/src/datetime.c,v
+retrieving revision 1.12
+retrieving revision 1.14
+diff -r1.12 -r1.14
+7c7
+<  * Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+>  * Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: src/error.c
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/src/error.c,v
+retrieving revision 1.24
+retrieving revision 1.26
+diff -r1.24 -r1.26
+10c10
+<  * Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+>  * Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: src/events.c
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/src/events.c,v
+retrieving revision 1.16
+retrieving revision 1.18
+diff -r1.16 -r1.18
+6c6
+<  * Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+>  * Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: src/exec.c
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/src/exec.c,v
+retrieving revision 1.25
+retrieving revision 1.27
+diff -r1.25 -r1.27
+6c6
+<  * Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+>  * Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: src/geo.c
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/src/geo.c,v
+retrieving revision 1.11
+retrieving revision 1.13
+diff -r1.11 -r1.13
+6c6
+<  * Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+>  * Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: src/handler.c
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/src/handler.c,v
+retrieving revision 1.29
+retrieving revision 1.31
+diff -r1.29 -r1.31
+6c6
+<  * Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+>  * Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: src/libpqtypes-int.h
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/src/libpqtypes-int.h,v
+retrieving revision 1.23
+retrieving revision 1.25
+diff -r1.23 -r1.25
+7c7
+<  * Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+>  * Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: src/libpqtypes.h
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/src/libpqtypes.h,v
+retrieving revision 1.35
+retrieving revision 1.37
+diff -r1.35 -r1.37
+6c6
+<  * Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+>  * Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: src/misc.c
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/src/misc.c,v
+retrieving revision 1.10
+retrieving revision 1.13
+diff -r1.10 -r1.13
+6c6
+<  * Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+>  * Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+17c17,30
+< 	*args->put.out = (PGchar) va_arg(args->ap, int);
+---
+> 	PGchar c;
+> 
+> 	if (args->is_ptr)
+> 	{
+> 		PGchar *ptr = (PGchar *) va_arg(args->ap, PGchar *);
+> 		PUTNULLCHK(args, ptr);
+> 		c = *ptr;
+> 	}
+> 	else
+> 	{
+> 		c = (PGchar) va_arg(args->ap, int);
+> 	}
+> 
+> 	*args->put.out = c;
+34c47,60
+< 	*args->put.out = ((char) va_arg(args->ap, PGbool)!=0) ? 1 : 0;
+---
+> 	char b;
+> 
+> 	if (args->is_ptr)
+> 	{
+> 		PGbool *ptr = (PGbool *) va_arg(args->ap, PGbool *);
+> 		PUTNULLCHK(args, ptr);
+> 		b = (char) *ptr;
+> 	}
+> 	else
+> 	{
+> 		b = (char) va_arg(args->ap, PGbool);
+> 	}
+> 
+> 	*args->put.out = b != 0 ? 1 : 0;
+56c82
+< 	PGmoney money = va_arg(args->ap, PGmoney);
+---
+> 	PGmoney money;
+58a85,95
+> 	if (args->is_ptr)
+> 	{
+> 		PGmoney *ptr = va_arg(args->ap, PGmoney *);
+> 		PUTNULLCHK(args, ptr);
+> 		money = *ptr;
+> 	}
+> 	else
+> 	{
+> 		money = va_arg(args->ap, PGmoney);
+> 	}
+> 
+Index: src/network.c
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/src/network.c,v
+retrieving revision 1.10
+retrieving revision 1.12
+diff -r1.10 -r1.12
+6c6
+<  * Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+>  * Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: src/numerics.c
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/src/numerics.c,v
+retrieving revision 1.11
+retrieving revision 1.14
+diff -r1.11 -r1.14
+6c6
+<  * Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+>  * Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+70c70,82
+< 	PGint2 n = (PGint2) va_arg(args->ap, int);
+---
+> 	PGint2 n;
+> 
+> 	if (args->is_ptr)
+> 	{
+> 		PGint4 *nptr = va_arg(args->ap, PGint4 *);
+> 		PUTNULLCHK(args, nptr);
+> 		n = (PGint2) *nptr;
+> 	}
+> 	else
+> 	{
+> 		n = (PGint2) va_arg(args->ap, PGint4);
+> 	}
+> 
+103c115,127
+< 	PGint4 n = va_arg(args->ap, PGint4);
+---
+> 	PGint4 n;
+> 
+> 	if (args->is_ptr)
+> 	{
+> 		PGint4 *nptr = va_arg(args->ap, PGint4 *);
+> 		PUTNULLCHK(args, nptr);
+> 		n = *nptr;
+> 	}
+> 	else
+> 	{
+> 		n = (PGint4) va_arg(args->ap, PGint4);
+> 	}
+> 
+136c160,172
+< 	PGint8 i8 = va_arg(args->ap, PGint8);
+---
+> 	PGint8 i8;
+> 
+> 	if (args->is_ptr)
+> 	{
+> 		PGint8 *nptr = va_arg(args->ap, PGint8 *);
+> 		PUTNULLCHK(args, nptr);
+> 		i8 = *nptr;
+> 	}
+> 	else
+> 	{
+> 		i8 = va_arg(args->ap, PGint8);
+> 	}
+> 
+163,164c199,211
+< 	PGfloat4 f = (PGfloat4) va_arg(args->ap, double);
+< 	void *vp = (void *)&f;
+---
+> 	void *vp;
+> 
+> 	if (args->is_ptr)
+> 	{
+> 		vp = (void *) va_arg(args->ap, double *);
+> 		PUTNULLCHK(args, vp);
+> 	}
+> 	else
+> 	{
+> 		PGfloat4 f = (PGfloat4) va_arg(args->ap, double);
+> 		vp = (void *)&f;
+> 	}
+> 
+196c243,255
+< 	PGfloat8 d = va_arg(args->ap, PGfloat8);
+---
+> 	PGfloat8 d;
+> 
+> 	if (args->is_ptr)
+> 	{
+> 		PGfloat8 *ptr = (PGfloat8 *) va_arg(args->ap, PGfloat8 *);
+> 		PUTNULLCHK(args, ptr);
+> 		d = *ptr;
+> 	}
+> 	else
+> 	{
+> 		d = va_arg(args->ap, PGfloat8);
+> 	}
+> 
+234a294,295
+> 	PUTNULLCHK(args, str);
+> 
+Index: src/param.c
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/src/param.c,v
+retrieving revision 1.23
+retrieving revision 1.27
+diff -r1.23 -r1.27
+6c6
+<  * Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+>  * Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+415a416,424
+> 	else if (datal == 0)
+> 	{
+> 		/* BUG FIX: allows putting empty strings in binary mode. Without this,
+> 		 * empty strings would be converted to an SQL NULL.
+> 		 * Reported by: Dmitry Epstein
+> 		 */
+> 		static char zero[1] = {0};
+> 		v->data = zero;
+> 	}
+Index: src/port.c
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/src/port.c,v
+retrieving revision 1.8
+retrieving revision 1.10
+diff -r1.8 -r1.10
+7c7
+<  * Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+>  * Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: src/record.c
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/src/record.c,v
+retrieving revision 1.9
+retrieving revision 1.11
+diff -r1.9 -r1.11
+6c6
+<  * Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+>  * Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: src/spec.c
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/src/spec.c,v
+retrieving revision 1.10
+retrieving revision 1.12
+diff -r1.10 -r1.12
+6c6
+<  * Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+>  * Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: src/utils.c
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/src/utils.c,v
+retrieving revision 1.11
+retrieving revision 1.13
+diff -r1.11 -r1.13
+6c6
+<  * Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+>  * Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
+Index: src/varlena.c
+===================================================================
+RCS file: /var/lib/gforge/chroot/cvsroot/libpqtypes/libpqtypes/src/varlena.c,v
+retrieving revision 1.6
+retrieving revision 1.8
+diff -r1.6 -r1.8
+6c6
+<  * Copyright (c) 2011 eSilo, LLC. All rights reserved.
+---
+>  * Copyright (c) 2008-2015 eSilo, LLC. All rights reserved.
