@@ -5,7 +5,7 @@ The reason for creating this fork is a slow reaction from libpqtypes developers 
 
 Change Log:
 
-v 1.5.2a
+v 1.5.2a (most of the changes below are made by Dmitry Epstein)
 
  -	PQseterror (error.c) - an optimization.
  -	pqt_put_float4 (numerics.c) - looks like a fix for a non-standard syntax.
