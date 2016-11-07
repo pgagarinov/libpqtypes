@@ -1,7 +1,7 @@
 # libpqtypes
 
-This is a fork of the official libpqtypes repository once maintained by Andrew Chernow and Merlin Moncure from eSilo [(see http://libpqtypes.esilo.com/)](http://libpqtypes.esilo.com/)
-The reason for creating this fork is a slow reaction from libpqtypes developers to newly found bugs. 
+This is a fork of the official libpqtypes repository once maintained by Andrew Chernow and Merlin Moncure from eSilo [(see http://libpqtypes.esilo.com/)](http://libpqtypes.esilo.com/).
+The reason for creating this fork is a slow reaction from libpqtypes developers to some newly found bugs. 
 
 Change Log:
 
